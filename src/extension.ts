@@ -31,8 +31,6 @@ export function activate(context: vscode.ExtensionContext) {
         const arr: vscode.QuickPickItem[] = captions.map(caption => {
           return {
             label: (caption.lineText.lineNumber + 1) + ": " + caption.label + caption.ref,   // + "❗",
-            ref: caption.ref,
-            line: caption.lineText.lineNumber
           };
         });
 
@@ -41,13 +39,14 @@ export function activate(context: vscode.ExtensionContext) {
         });
         if (
           !selection ||
-          !selection.line
+          !selection.label ||
+          !selection.label.split(': ')[0]
         ) {
           console.log(`No valid selection made!`);
           return;
         }
-
-        goToLine(selection.line + 1);
+        const lineNumber = selection.label.split(': ')[0];
+        goToLine(Number(lineNumber));
       });
     }
   );
@@ -63,9 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
       getReferences(editor.document).then(async captions => {
         const arr: vscode.QuickPickItem[] = captions.map(caption => {
           return {
-            label: caption.lineText.text,   // + "❗",
-            ref: caption.ref,
-            line: caption.lineText.lineNumber,
+            label: (caption.lineText.lineNumber + 1) + ": " + caption.lineText.text,   // + "❗",
           };
         });
 
@@ -74,13 +71,14 @@ export function activate(context: vscode.ExtensionContext) {
         });
         if (
           !selection ||
-          !selection.line
+          !selection.label ||
+          !selection.label.split(': ')[0]
         ) {
           console.log(`No valid selection made!`);
           return;
         }
-
-        goToLine(selection.line + 1);
+        const lineNumber = selection.label.split(': ')[0];
+        goToLine(Number(lineNumber));
       });
     }
   );

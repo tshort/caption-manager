@@ -3,6 +3,8 @@
 	"displayName": "Caption manager",
 	"description": "Manage figure and table captions and cross references",
 	"version": "0.1.0",
+	"publisher": "tshort",
+	"repository": "https://github.com/tshort/caption-manager",
 	"engines": {
 		"vscode": "^1.41.0"
 	},
